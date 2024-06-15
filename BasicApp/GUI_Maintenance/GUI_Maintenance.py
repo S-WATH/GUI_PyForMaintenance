@@ -80,7 +80,7 @@ mtworkorderlist.pack()
 
 style = ttk.Style()
 style.configure('Treeview.Heading',font=('THSarabunNew',20))
-style.configure('Treeview',rowheight=25,font=('THSarabunNew',15))
+style.configure('Treeview',rowheight=25,font=('THSarabunNew',18))
 
 for h,w in zip(header,headerw):
     mtworkorderlist.heading(h,text=h)
@@ -175,6 +175,7 @@ def editPage_mtworkorder(event=None):
     B_edit_save = ttk.Button(GUI2,text='บันทึกใบแจ้งซ่อม',command=edit_save)
     B_edit_save.place(x=200,y=350)
 
+    
 
 
 
@@ -187,10 +188,6 @@ def editPage_mtworkorder(event=None):
 
 mtworkorderlist.bind('<Double-1>',editPage_mtworkorder)
 
-
-
-
-
 ####TAB3##########################################################################
 
 
@@ -198,6 +195,24 @@ mtworkorderlist.bind('<Double-1>',editPage_mtworkorder)
 
 
 ####FUNCTION
+#Function for delete item in treeview and db#
+
+
+def delResult(event=None):
+    select = mtworkorderlist.selection()
+    output = mtworkorderlist.item(select)
+    tsid = output['values'][0]
+    print('TSID no.{} will be delete.!!!'.format(tsid))
+
+    #### ยืนยันว่าต้องการลบจริงๆ
+    confirm = messagebox.askyesno('Confirm : ยืนยันการลบ','ต้องการลบข้อมูลนี้ใช่หรือไม่')
+    print(confirm)
+
+    if confirm == True:
+        delete_mtworkorder(tsid)
+        update_table()    
+mtworkorderlist.bind('<BackSpace>',delResult)
+
 def genTsid():
     dt = str(int(datetime.now().strftime('%y%m%d%H%M%S'))+240332210200)
     print(dt)
