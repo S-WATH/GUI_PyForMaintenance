@@ -100,9 +100,8 @@ def update_table():
         del d[0]    #ลบคอลัมภ์แรก ที่เป็นตัวเลขรันไปเรื่อย
         mtworkorderlist.insert('','end',values=d)
 
-####หน้าแก้ไขข้อมูลเมื่อทำการDouble click
 
-
+####หน้าแก้ไขข้อมูลเมื่อทำการDouble click#################
 
 def editPage_mtworkorder(event=None):
     
@@ -121,40 +120,64 @@ def editPage_mtworkorder(event=None):
     #-------------
     L = Label(GUI2,text='ชื่อผู้แจ้ง',font=FONT2)
     L.place(x=30,y=50)
-    v_name2 = StringVar().set(op[1]) #ตัวแปรพิเศษใช้กับ GUI
+    v_name2 = StringVar()#ตัวแปรพิเศษใช้กับ GUI
+    v_name2.set(op[1])
     E1 = ttk.Entry(GUI2,textvariable=v_name2, font=FONT2)
     E1.place(x=150,y=50)
 
     #-------------
     L = Label(GUI2,text='แผนก',font=FONT2)
     L.place(x=30,y=100)
-    v_department2 =StringVar().set(op[2])
+    v_department2 =StringVar()
+    v_department2.set(op[2])
     E2 = ttk.Entry(GUI2,textvariable=v_department2,font=FONT2)
     E2.place(x=150,y=100)
     #-------------
     L = Label(GUI2,text='อุปกรณ์/เครื่อง',font=FONT2)
     L.place(x=30,y=150)
-    v_machine2 =StringVar().set(op[3])
+    v_machine2 =StringVar()
+    v_machine2.set(op[3])
     E3 = ttk.Entry(GUI2,textvariable=v_machine2,font=FONT2)
     E3.place(x=150,y=150)
     #-------------
     L = Label(GUI2,text='อาการเสีย',font=FONT2)
     L.place(x=30,y=200)
-    v_problem2 =StringVar().set(op[4])
+    v_problem2 =StringVar()
+    v_problem2.set(op[4])
     E4 = ttk.Entry(GUI2,textvariable=v_problem2 ,font=FONT2)
     E4.place(x=150,y=200)
     #-------------
     L = Label(GUI2,text='หมายเลข',font=FONT2)
     L.place(x=30,y=250)
-    v_number2 =StringVar().set(op[5])
+    v_number2 =StringVar()
+    v_number2.set(op[5])
     E5 = ttk.Entry(GUI2,textvariable=v_number2,font=FONT2)
     E5.place(x=150,y=250)
     #-------------
     L = Label(GUI2,text='เบอร์โทร',font=FONT2)
     L.place(x=30,y=300)
-    v_tel2 =StringVar().set('0{}'.format(op[6]))
+    v_tel2 =StringVar()
+    v_tel2.set('0{}'.format(op[6]))
     E6 = ttk.Entry(GUI2,textvariable=v_tel2,font=FONT2)
     E6.place(x=150,y=300)
+    
+    ###########Function Save สำหรับการแก้ไข
+    def edit_save():
+        #ต้องดึงค่าออกจาก entry แล้วนำมาแก้ไข้ ด้วยฟังก์ชัน อัพเดทฐานข้อมูล โดยใช้ tsid เป็นตัวเชื่อม
+        dbField = ['name','department','machine','problem','number','tel']
+        newDbValue = [v_name2.get(),v_department2.get(),v_machine2.get(),v_problem2.get(),v_number2.get(),v_tel2.get()]
+
+        for n,v in zip(dbField,newDbValue):
+            update_mtworkorder(op[0],n,v)
+
+        update_table()
+        GUI2.destroy()
+    B_edit_save = ttk.Button(GUI2,text='บันทึกใบแจ้งซ่อม',command=edit_save)
+    B_edit_save.place(x=200,y=350)
+
+
+
+
 
 
 
