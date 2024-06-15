@@ -100,6 +100,74 @@ def update_table():
         del d[0]    #ลบคอลัมภ์แรก ที่เป็นตัวเลขรันไปเรื่อย
         mtworkorderlist.insert('','end',values=d)
 
+####หน้าแก้ไขข้อมูลเมื่อทำการDouble click
+
+
+
+def editPage_mtworkorder(event=None):
+    
+    select = mtworkorderlist.selection()
+    output = mtworkorderlist.item(select)
+    op = output['values']   #ดึงข้อมูลหัวข้อ values ซึ่งอยู่ในDict
+    print('OUTPUT : ',op) #ข้อมูลออกมาเป็นLIST ไม่มีIDตามในฐานข้อมูล เพราะดึงข้อมูลจากTreeview ที่แสดงผล
+
+    GUI2 = Toplevel()
+    GUI2.title('แก้ไขข้อมูลใบแจ้งซ่อม')
+    GUI2.geometry('500x500')
+
+    L = Label(GUI2,text='ใบแจ้งซ่อม',font=FONT1)
+    L.place(x=80,y=10)
+
+    #-------------
+    L = Label(GUI2,text='ชื่อผู้แจ้ง',font=FONT2)
+    L.place(x=30,y=50)
+    v_name2 = StringVar().set(op[1]) #ตัวแปรพิเศษใช้กับ GUI
+    E1 = ttk.Entry(GUI2,textvariable=v_name2, font=FONT2)
+    E1.place(x=150,y=50)
+
+    #-------------
+    L = Label(GUI2,text='แผนก',font=FONT2)
+    L.place(x=30,y=100)
+    v_department2 =StringVar().set(op[2])
+    E2 = ttk.Entry(GUI2,textvariable=v_department2,font=FONT2)
+    E2.place(x=150,y=100)
+    #-------------
+    L = Label(GUI2,text='อุปกรณ์/เครื่อง',font=FONT2)
+    L.place(x=30,y=150)
+    v_machine2 =StringVar().set(op[3])
+    E3 = ttk.Entry(GUI2,textvariable=v_machine2,font=FONT2)
+    E3.place(x=150,y=150)
+    #-------------
+    L = Label(GUI2,text='อาการเสีย',font=FONT2)
+    L.place(x=30,y=200)
+    v_problem2 =StringVar().set(op[4])
+    E4 = ttk.Entry(GUI2,textvariable=v_problem2 ,font=FONT2)
+    E4.place(x=150,y=200)
+    #-------------
+    L = Label(GUI2,text='หมายเลข',font=FONT2)
+    L.place(x=30,y=250)
+    v_number2 =StringVar().set(op[5])
+    E5 = ttk.Entry(GUI2,textvariable=v_number2,font=FONT2)
+    E5.place(x=150,y=250)
+    #-------------
+    L = Label(GUI2,text='เบอร์โทร',font=FONT2)
+    L.place(x=30,y=300)
+    v_tel2 =StringVar().set('0{}'.format(op[6]))
+    E6 = ttk.Entry(GUI2,textvariable=v_tel2,font=FONT2)
+    E6.place(x=150,y=300)
+
+
+
+
+
+    GUI2.mainloop()
+
+mtworkorderlist.bind('<Double-1>',editPage_mtworkorder)
+
+
+
+
+
 ####TAB3##########################################################################
 
 
